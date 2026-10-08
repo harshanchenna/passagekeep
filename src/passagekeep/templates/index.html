@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Books — Passagekeep{% endblock %}
+{% block content %}
+  <h1>Your books</h1>
+  {% if not books %}
+    <p>No books yet. Import a clippings file with <code>passagekeep import &lt;file&gt;</code>.</p>
+  {% else %}
+    <ul class="book-list">
+      {% for b in books %}
+        <li>
+          <a href="/books/{{ b['id'] }}">{{ b['title'] }}</a>
+          {% if b['author'] %}<span class="meta">by {{ b['author'] }}</span>{% endif %}
+          <span class="meta">({{ b['highlight_count'] }} highlights)</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

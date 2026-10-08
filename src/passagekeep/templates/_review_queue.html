@@ -1,0 +1,24 @@
+<div id="review-queue">
+  {% if due %}
+    {% for h in due %}
+      <div class="highlight" id="review-{{ h['id'] }}">
+        <div class="meta">{{ h['book_title'] }}{% if h['book_author'] %} by {{ h['book_author'] }}{% endif %}</div>
+        <blockquote>{{ h['text'] }}</blockquote>
+        <form hx-post="/review/{{ h['id'] }}/grade" hx-target="#review-queue" hx-swap="outerHTML">
+          <label>How well did you recall this?</label>
+          <select name="quality">
+            <option value="0">0 - forgot completely</option>
+            <option value="1">1 - mostly forgot</option>
+            <option value="2">2 - struggled</option>
+            <option value="3" selected>3 - recalled with effort</option>
+            <option value="4">4 - recalled easily</option>
+            <option value="5">5 - perfect recall</option>
+          </select>
+          <button type="submit">Grade</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>Nothing due for review. Nice work.</p>
+  {% endif %}
+</div>

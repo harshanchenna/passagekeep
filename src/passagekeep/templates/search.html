@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Search — Passagekeep{% endblock %}
+{% block content %}
+  <h1>Search: "{{ query }}"</h1>
+  {% if results %}
+    {% for h in results %}
+      <div class="highlight">
+        <div class="meta">
+          <a href="/books/{{ h['book_id'] }}">{{ h['book_title'] }}</a>
+          {% if h['book_author'] %}by {{ h['book_author'] }}{% endif %}
+          &middot; {{ h['type']|capitalize }}
+        </div>
+        <blockquote>{{ h['text'] }}</blockquote>
+      </div>
+    {% endfor %}
+  {% elif query %}
+    <p>No matches.</p>
+  {% endif %}
+{% endblock %}

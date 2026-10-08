@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ book['title'] }} — Passagekeep{% endblock %}
+{% block content %}
+  <h1>{{ book['title'] }}</h1>
+  {% if book['author'] %}<p class="meta">by {{ book['author'] }}</p>{% endif %}
+  <p><a href="/books/{{ book['id'] }}/export">Export to Markdown</a></p>
+
+  {% for h in highlights %}
+    <div class="highlight">
+      <div class="meta">
+        {{ h['type']|capitalize }}
+        {% if h['page'] %}&middot; page {{ h['page'] }}{% endif %}
+        {% if h['location_start'] %}&middot; location {{ h['location_start'] }}{% if h['location_end'] and h['location_end'] != h['location_start'] %}-{{ h['location_end'] }}{% endif %}{% endif %}
+        {% if h['raw_added'] %}&middot; added {{ h['raw_added'] }}{% endif %}
+      </div>
+      {% if h['text'] %}<blockquote>{{ h['text'] }}</blockquote>{% else %}<p><em>(no text)</em></p>{% endif %}
+      {% with highlight_id=h['id'], tags=tags_by_highlight[h['id']] %}
+        {% include "_tags.html" %}
+      {% endwith %}
+    </div>
+  {% else %}
+    <p>No highlights for this book.</p>
+  {% endfor %}
+{% endblock %}

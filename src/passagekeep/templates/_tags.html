@@ -1,0 +1,13 @@
+<span id="tags-{{ highlight_id }}">
+  {% for t in tags %}
+    <span class="tag">{{ t }}
+      <form class="inline" hx-post="/highlights/{{ highlight_id }}/tags/{{ t }}/delete" hx-target="#tags-{{ highlight_id }}" hx-swap="outerHTML">
+        <button type="submit" title="remove">&times;</button>
+      </form>
+    </span>
+  {% endfor %}
+  <form class="inline" hx-post="/highlights/{{ highlight_id }}/tags" hx-target="#tags-{{ highlight_id }}" hx-swap="outerHTML">
+    <input type="text" name="tag" placeholder="add tag" size="10">
+    <button type="submit">+</button>
+  </form>
+</span>
